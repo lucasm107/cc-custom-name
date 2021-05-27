@@ -171,7 +171,7 @@
       "metadata": {
         "description": "The URL to the GitHub repository to deploy."
       },
-      "defaultValue": "https://github.com/OfficeDev/microsoft-teams-company-communicator-app.git"
+      "defaultValue": "https://github.com/lucasm107/cc-custom-name.git"
     },
     "gitBranch": {
       "type": "string",
@@ -182,18 +182,18 @@
     }
   },
   "variables": {
-    "botName": "[parameters('baseResourceName')]",
-    "authorBotName": "[concat(parameters('baseResourceName'), '-author')]",
-    "botAppName": "[parameters('baseResourceName')]",
+    "botName": "ntsmzpwabcco002",
+    "authorBotName": "ntsmzpwabcco001",
+    "botAppName": "ntsmzpwapcco001",
     "botAppDomain": "[concat(variables('botAppName'), '.azurewebsites.net')]",
     "botAppUrl": "[concat('https://', variables('botAppDomain'))]",
-    "hostingPlanName": "[parameters('baseResourceName')]",
-    "storageAccountName": "[uniquestring(concat(resourceGroup().id, parameters('baseResourceName')))]",
-    "appInsightsName": "[parameters('baseResourceName')]",
-    "prepFunctionAppName": "[concat(parameters('baseResourceName'), '-prep-function')]",
-    "sendFunctionAppName": "[concat(parameters('baseResourceName'), '-function')]",
-    "dataFunctionAppName": "[concat(parameters('baseResourceName'), '-data-function')]",
-    "serviceBusNamespaceName": "[parameters('baseResourceName')]",
+    "hostingPlanName": "ntsmzpaspcco001",
+    "storageAccountName": "ntsmzpstapcco001",
+    "appInsightsName": "ntsmzpaincco001",
+    "prepFunctionAppName": "ntsmzpafacco001",
+    "sendFunctionAppName": "ntsmzpafacco002",
+    "dataFunctionAppName": "ntsmzpafacco003",
+    "serviceBusNamespaceName": "ntsmzpsbncco001",
     "serviceBusSendQueueName": "company-communicator-send",
     "serviceBusDataQueueName": "company-communicator-data",
     "serviceBusPrepareToSendQueueName": "company-communicator-prep",

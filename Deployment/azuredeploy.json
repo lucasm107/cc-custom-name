@@ -184,7 +184,7 @@
   "variables": {
     "botName": "ntsmzpwabcco002",
     "authorBotName": "ntsmzpwabcco001",
-    "botAppName": "ntsmzpwapcco001",
+    "botAppName": "ntsmzpwapcco002",
     "botAppDomain": "[concat(variables('botAppName'), '.azurewebsites.net')]",
     "botAppUrl": "[concat('https://', variables('botAppDomain'))]",
     "hostingPlanName": "ntsmzpaspcco001",

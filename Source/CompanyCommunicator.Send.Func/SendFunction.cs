@@ -244,7 +244,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             {
                 ContentType = AdaptiveCardContentType,
                 //Content = JsonConvert.DeserializeObject(notification.Content),
-                Content = mycontent,
+                Content = (object)mycontent,
             };
             return MessageFactory.Attachment(adaptiveCardAttachment);
         }

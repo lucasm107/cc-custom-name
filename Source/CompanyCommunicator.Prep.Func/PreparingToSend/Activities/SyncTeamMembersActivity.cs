@@ -138,7 +138,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 var userEntity = await this.userDataRepository.GetAsync(UserDataTableNames.UserDataPartition, user.AadId);
                 user.ConversationId ??= userEntity?.ConversationId;
                 recipients.Add(user.CreateInitialSentNotificationDataEntity(partitionKey: notificationId));
-                log.LogInformation($"El userEntity vale: >>>>>>>  {userEntity.Upn}");
+                log.LogInformation($"El userEntity vale: >>>>>>>  {user.Upn}");
             }));
 
             return recipients;

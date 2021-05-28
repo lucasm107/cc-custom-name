@@ -136,7 +136,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                 }
 
                 // Send message.
-                var messageActivity = await this.GetMessageActivity(messageContent);
+                var messageActivity = await this.GetMessageActivity(messageContent, log);
                 var response = await this.messageService.SendMessageAsync(
                     message: messageActivity,
                     serviceUrl: messageContent.GetServiceUrl(),
@@ -144,7 +144,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                     maxAttempts: this.maxNumberOfAttempts,
                     logger: log);
                 
-                log.LogInformation($"messageActivity vale >>>>>>>>>: {messageActivity}");
+                log.LogInformation($"messageActivity vale >>>>>>>>>: {messageActivity.Attachments.ToString()}");
                 
                 // Process response.
                 await this.ProcessResponseAsync(messageContent, response, log);
@@ -228,12 +228,12 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             }
         }
 
-        private async Task<IMessageActivity> GetMessageActivity(SendQueueMessageContent message)
+        private async Task<IMessageActivity> GetMessageActivity(SendQueueMessageContent message, ILogger log)
         {
             var notification = await this.notificationRepo.GetAsync(
                 NotificationDataTableNames.SendingNotificationsPartition,
                 message.NotificationId);
-            
+            log.LogInformation($"GetMessageActivity notification.Content >>>>>>>>>>> {notification.Content}");
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,

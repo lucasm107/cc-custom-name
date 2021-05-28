@@ -193,6 +193,10 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             {
                 log.LogInformation($"Successfully sent the message --->" +
                     $"\nRecipient Id: {messageContent.RecipientData.RecipientId}");
+                log.LogInformation($"Esto es random  --->" +
+                    $"\nConcat!!! >>>: {Guid.NewGuid().ToString("n").Substring(0, 8)}");
+                    
+
             }
             else
             {
@@ -228,7 +232,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                 NotificationDataTableNames.SendingNotificationsPartition,
                 message.NotificationId);
             
-            var random = Guid.NewGuid().ToString("n").Substring(0, 8);
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,

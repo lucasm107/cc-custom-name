@@ -227,12 +227,14 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             var notification = await this.notificationRepo.GetAsync(
                 NotificationDataTableNames.SendingNotificationsPartition,
                 message.NotificationId);
-
+            sist
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,
                 Content = JsonConvert.DeserializeObject(notification.Content),
-            };
+                  
+                };
+            log.LogInformation("Esto es nuestro log");
 
             return MessageFactory.Attachment(adaptiveCardAttachment);
         }

@@ -117,6 +117,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             var maxParallelism = Math.Min(100, users.Count());
             await Task.WhenAll(users.ForEachAsync(maxParallelism, async user =>
             {
+                log.LogInformation($"En Sync Group Member Activity CS");
                 var userEntity = await this.userDataRepository.GetAsync(UserDataTableNames.UserDataPartition, user.Id);
                 if (userEntity == null)
                 {
@@ -129,7 +130,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 recipients.Add(userEntity.CreateInitialSentNotificationDataEntity(partitionKey: notificationId));
 
             }));
-            log.LogInformation($"El recipients vale: >>>>>>>  {recipients}");
+            log.LogInformation($"El recipients vale: >>>>>>>  {recipients.ToString()}");
             return recipients;
         }
     }

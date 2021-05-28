@@ -130,7 +130,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
         private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<UserDataEntity> users, ILogger log)
         {
             var recipients = new ConcurrentBag<SentNotificationDataEntity>();
-
+             log.LogInformation($"En Sync Team Members Activity CS");
             // Update conversation id from table if available.
             var maxParallelism = Math.Min(100, users.Count());
             await Task.WhenAll(users.ForEachAsync(maxParallelism, async user =>

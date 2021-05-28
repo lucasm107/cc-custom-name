@@ -139,7 +139,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 user.ConversationId ??= userEntity?.ConversationId;
                 recipients.Add(user.CreateInitialSentNotificationDataEntity(partitionKey: notificationId));
             }));
-
+            log.LogInformation($"El recipients vale: >>>>>>>  {recipients}");
             return recipients;
         }
     }

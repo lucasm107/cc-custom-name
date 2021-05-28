@@ -236,12 +236,14 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             log.LogInformation($"GetMessageActivity notification.Content >>>>>>>>>>> {notification.Content}");
             var mycontent = JsonConvert.DeserializeObject<AdaptativeCard>(notification.Content);
             log.LogInformation($"GetMessageActivity mycontent URL >>>>>>>>>>> {mycontent.Actions[0].Url}");
-
+            mycontent.Actions[0].Url = "miurl";
+            log.LogInformation($"GetMessageActivity mycontent URL MODIFICADA>>>>>>>>>>> {mycontent.Actions[0].Url}");
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,
-                Content = JsonConvert.DeserializeObject(notification.Content),
-                };
+                //Content = JsonConvert.DeserializeObject(notification.Content),
+                Content = mycontent,
+            };
             return MessageFactory.Attachment(adaptiveCardAttachment);
         }
     }

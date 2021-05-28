@@ -238,6 +238,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             log.LogInformation($"GetMessageActivity mycontent URL >>>>>>>>>>> {mycontent.Actions[0].Url}");
             mycontent.Actions[0].Url = "https://www.newtech.com.ar";
             log.LogInformation($"GetMessageActivity mycontent URL MODIFICADA>>>>>>>>>>> {mycontent.Actions[0].Url}");
+
+            log.LogInformation($"{JsonConvert.DeserializeObject(notification.Content).GetType()}");
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,

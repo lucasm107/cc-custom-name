@@ -102,7 +102,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
 
             var messageContent = JsonConvert.DeserializeObject<SendQueueMessageContent>(myQueueItem);
-            log.LogInformation($"messageContent vale >>>>>>>>>: {messageContent}");
+           
             try
             {
                 // Check if notification is pending.
@@ -143,7 +143,9 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                     conversationId: messageContent.GetConversationId(),
                     maxAttempts: this.maxNumberOfAttempts,
                     logger: log);
-
+                
+                log.LogInformation($"messageActivity vale >>>>>>>>>: {messageActivity}");
+                
                 // Process response.
                 await this.ProcessResponseAsync(messageContent, response, log);
             }

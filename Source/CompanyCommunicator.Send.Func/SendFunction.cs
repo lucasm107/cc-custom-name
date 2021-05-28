@@ -234,9 +234,9 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                 NotificationDataTableNames.SendingNotificationsPartition,
                 message.NotificationId);
             log.LogInformation($"GetMessageActivity notification.Content >>>>>>>>>>> {notification.Content}");
-            var mycontent = JsonConvert.DeserializeObject(notification.Content);
-            log.LogInformation($"GetMessageActivity mycontent URL >>>>>>>>>>> {mycontent}");
-            
+            var mycontent = JsonConvert.DeserializeObject<AdaptativeCard>(notification.Content);
+            log.LogInformation($"GetMessageActivity mycontent URL >>>>>>>>>>> {mycontent.Actions[0].Url}");
+
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,

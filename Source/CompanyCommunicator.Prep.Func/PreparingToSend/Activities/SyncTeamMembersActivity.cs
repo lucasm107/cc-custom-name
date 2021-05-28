@@ -141,7 +141,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 Console.WriteLine("-------------------------------");
                 Console.WriteLine(userEntity.ToString());
                 Console.WriteLine("-------------------------------");
-                Console.WriteLine(typeof(userEntity))
+                Console.WriteLine(typeof(userEntity));
                 Console.WriteLine("-------------------------------");
                 log.LogInformation($"El userEntity vale: >>>>>>>  {userEntity}");
             }));

@@ -108,9 +108,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
         /// </summary>
         /// <param name="notificationId">Notification Id.</param>
         /// <param name="users">Users.</param>
-        /// <param name="log">Logging service.</param>
         /// <returns>List of recipients.</returns>
-        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<User> users)
+        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<User> users, ILogger log)
         {
             var recipients = new ConcurrentBag<SentNotificationDataEntity>();
 

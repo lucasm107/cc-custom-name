@@ -102,7 +102,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
 
             var messageContent = JsonConvert.DeserializeObject<SendQueueMessageContent>(myQueueItem);
-
+            log.LogInformation($"messageContent vale >>>>>>>>>: {messageContent}");
             try
             {
                 // Check if notification is pending.

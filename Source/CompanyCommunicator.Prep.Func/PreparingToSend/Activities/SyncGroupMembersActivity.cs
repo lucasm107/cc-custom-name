@@ -108,6 +108,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
         /// </summary>
         /// <param name="notificationId">Notification Id.</param>
         /// <param name="users">Users.</param>
+        /// <param name="log">Logging service.</param>
         /// <returns>List of recipients.</returns>
         private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<User> users)
         {
@@ -127,8 +128,9 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 }
 
                 recipients.Add(userEntity.CreateInitialSentNotificationDataEntity(partitionKey: notificationId));
-            }));
 
+            }));
+            log.LogInformation($"El recipients vale: >>>>>>>  {recipients}");
             return recipients;
         }
     }

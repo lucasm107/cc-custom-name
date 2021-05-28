@@ -59,7 +59,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                                             FunctionNames.SyncTeamMembersActivity,
                                             FunctionSettings.DefaultRetryOptions,
                                             (notification.Id, teamId));
-                log.LogInformation($"El task vale: >>>>>>>  {task}");
                     tasks.Add(task);
                 }
                 log.LogInformation("ESTOY EN >>>>>>> Members of specific teams.");

@@ -191,7 +191,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
         {
             if (sendMessageResponse.ResultType == SendMessageResult.Succeeded)
             {
-                log.LogInformation($"Successfully sent the message." +
+                log.LogInformation($"Successfully sent the message --->" +
                     $"\nRecipient Id: {messageContent.RecipientData.RecipientId}");
             }
             else
@@ -229,47 +229,10 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                 message.NotificationId);
             
             var random = Guid.NewGuid().ToString("n").Substring(0, 8);
-            Console.WriteLine(Guid.NewGuid());
-
-            var json = {
-                            "type": "AdaptiveCard",
-                            "version": "1.0",
-                            "body": [
-                                {
-                                "type": "TextBlock",
-                                "size": "extraLarge",
-                                "weight": "bolder",
-                                "text": "Mensaje camino feliz desde codigo",
-                                "wrap": true
-                                },
-                                {
-                                "type": "TextBlock",
-                                "text": "body",
-                                "wrap": true
-                                },
-                                {
-                                "type": "TextBlock",
-                                "size": "small",
-                                "weight": "lighter",
-                                "text": "dc",
-                                "wrap": true
-                                }
-                            ],
-                            "actions": [
-                                {
-                                "type": "Action.OpenUrl",
-                                "url": "https://google.com",
-                                "title": random
-                                }
-                            ]
-                        };
-
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,
-                //Content = JsonConvert.DeserializeObject(notification.Content),
-                Content = JsonConvert.DeserializeObject(json),
-                  
+                Content = JsonConvert.DeserializeObject(notification.Content),
                 };
             return MessageFactory.Attachment(adaptiveCardAttachment);
         }

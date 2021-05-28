@@ -51,7 +51,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             // Members of specific teams.
             if (notification.Rosters.Any())
             {
-                /*
+                
                 var tasks = new List<Task>();
                 foreach (var teamId in notification.Rosters)
                 {
@@ -65,7 +65,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 // Fan-Out Fan-In.
                 await Task.WhenAll(tasks);
                 return;
-                */
+                
             }
 
             // Members of M365 groups, DG or SG.

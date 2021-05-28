@@ -90,7 +90,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 var users = await this.groupMembersService.GetGroupMembersAsync(groupId);
 
                 // Convert to Recipients
-                var recipients = await this.GetRecipientsAsync(notificationId, users);
+                var recipients = await this.GetRecipientsAsync(notificationId, users, log);
 
                 // Store.
                 await this.sentNotificationDataRepository.BatchInsertOrMergeAsync(recipients);

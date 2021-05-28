@@ -108,7 +108,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                     serviceUrl: teamInfo.ServiceUrl);
 
                 // Convert to Recipients.
-                var recipients = await this.GetRecipientsAsync(notificationId, userEntities);
+                var recipients = await this.GetRecipientsAsync(notificationId, userEntities, log);
 
                 // Store.
                 await this.sentNotificationDataRepository.BatchInsertOrMergeAsync(recipients);
@@ -127,7 +127,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
         /// <param name="notificationId">Notification Id.</param>
         /// <param name="users">Users.</param>
         /// <returns>List of recipients.</returns>
-        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<UserDataEntity> users)
+        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<UserDataEntity> users, ILogger log)
         {
             var recipients = new ConcurrentBag<SentNotificationDataEntity>();
 

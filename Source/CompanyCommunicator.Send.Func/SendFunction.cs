@@ -102,7 +102,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
 
             var messageContent = JsonConvert.DeserializeObject<SendQueueMessageContent>(myQueueItem);
-           
+
             try
             {
                 // Check if notification is pending.
@@ -136,16 +136,14 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
                 }
 
                 // Send message.
-                var messageActivity = await this.GetMessageActivity(messageContent, log);
+                var messageActivity = await this.GetMessageActivity(messageContent);
                 var response = await this.messageService.SendMessageAsync(
                     message: messageActivity,
                     serviceUrl: messageContent.GetServiceUrl(),
                     conversationId: messageContent.GetConversationId(),
                     maxAttempts: this.maxNumberOfAttempts,
                     logger: log);
-                
-                log.LogInformation($"messageActivity vale >>>>>>>>>: {messageActivity.Attachments.ToString()}");
-                
+
                 // Process response.
                 await this.ProcessResponseAsync(messageContent, response, log);
             }
@@ -193,12 +191,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
         {
             if (sendMessageResponse.ResultType == SendMessageResult.Succeeded)
             {
-                log.LogInformation($"Successfully sent the message --->" +
+                log.LogInformation($"Successfully sent the message." +
                     $"\nRecipient Id: {messageContent.RecipientData.RecipientId}");
-                log.LogInformation($"Esto es random  --->" +
-                    $"\nConcat!!! >>>: {Guid.NewGuid().ToString("n").Substring(0, 8)}");
-                    
-
             }
             else
             {
@@ -228,24 +222,18 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Send.Func
             }
         }
 
-        private async Task<IMessageActivity> GetMessageActivity(SendQueueMessageContent message, ILogger log)
+        private async Task<IMessageActivity> GetMessageActivity(SendQueueMessageContent message)
         {
             var notification = await this.notificationRepo.GetAsync(
                 NotificationDataTableNames.SendingNotificationsPartition,
                 message.NotificationId);
-            log.LogInformation($"GetMessageActivity notification.Content >>>>>>>>>>> {notification.Content}");
-            var mycontent = JsonConvert.DeserializeObject<AdaptativeCard>(notification.Content);
-            log.LogInformation($"GetMessageActivity mycontent URL >>>>>>>>>>> {mycontent.Actions[0].Url}");
-            mycontent.Actions[0].Url = "https://www.newtech.com.ar";
-            log.LogInformation($"GetMessageActivity mycontent URL MODIFICADA>>>>>>>>>>> {mycontent.Actions[0].Url}");
 
-            log.LogInformation($"{JsonConvert.DeserializeObject(notification.Content).GetType()}");
             var adaptiveCardAttachment = new Attachment()
             {
                 ContentType = AdaptiveCardContentType,
-                //Content = JsonConvert.DeserializeObject(notification.Content),
-                Content = (object)mycontent,
+                Content = JsonConvert.DeserializeObject(notification.Content),
             };
+
             return MessageFactory.Attachment(adaptiveCardAttachment);
         }
     }

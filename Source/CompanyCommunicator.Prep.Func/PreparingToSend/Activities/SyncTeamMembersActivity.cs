@@ -108,7 +108,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                     serviceUrl: teamInfo.ServiceUrl);
 
                 // Convert to Recipients.
-                var recipients = await this.GetRecipientsAsync(notificationId, userEntities, log);
+                var recipients = await this.GetRecipientsAsync(notificationId, userEntities);
 
                 // Store.
                 await this.sentNotificationDataRepository.BatchInsertOrMergeAsync(recipients);
@@ -127,10 +127,10 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
         /// <param name="notificationId">Notification Id.</param>
         /// <param name="users">Users.</param>
         /// <returns>List of recipients.</returns>
-        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<UserDataEntity> users, ILogger log)
+        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<UserDataEntity> users)
         {
             var recipients = new ConcurrentBag<SentNotificationDataEntity>();
-             log.LogInformation($"En Sync Team Members Activity CS");
+
             // Update conversation id from table if available.
             var maxParallelism = Math.Min(100, users.Count());
             await Task.WhenAll(users.ForEachAsync(maxParallelism, async user =>
@@ -138,7 +138,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 var userEntity = await this.userDataRepository.GetAsync(UserDataTableNames.UserDataPartition, user.AadId);
                 user.ConversationId ??= userEntity?.ConversationId;
                 recipients.Add(user.CreateInitialSentNotificationDataEntity(partitionKey: notificationId));
-                log.LogInformation($"El userEntity vale: >>>>>>>  {user.Upn}");
             }));
 
             return recipients;

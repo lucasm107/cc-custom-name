@@ -90,7 +90,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 var users = await this.groupMembersService.GetGroupMembersAsync(groupId);
 
                 // Convert to Recipients
-                var recipients = await this.GetRecipientsAsync(notificationId, users, log);
+                var recipients = await this.GetRecipientsAsync(notificationId, users);
 
                 // Store.
                 await this.sentNotificationDataRepository.BatchInsertOrMergeAsync(recipients);
@@ -109,7 +109,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
         /// <param name="notificationId">Notification Id.</param>
         /// <param name="users">Users.</param>
         /// <returns>List of recipients.</returns>
-        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<User> users, ILogger log)
+        private async Task<IEnumerable<SentNotificationDataEntity>> GetRecipientsAsync(string notificationId, IEnumerable<User> users)
         {
             var recipients = new ConcurrentBag<SentNotificationDataEntity>();
 
@@ -117,7 +117,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             var maxParallelism = Math.Min(100, users.Count());
             await Task.WhenAll(users.ForEachAsync(maxParallelism, async user =>
             {
-                log.LogInformation($"En Sync Group Member Activity CS");
                 var userEntity = await this.userDataRepository.GetAsync(UserDataTableNames.UserDataPartition, user.Id);
                 if (userEntity == null)
                 {
@@ -128,9 +127,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 }
 
                 recipients.Add(userEntity.CreateInitialSentNotificationDataEntity(partitionKey: notificationId));
-
             }));
-            log.LogInformation($"El recipients vale: >>>>>>>  {recipients.ToString()}");
+
             return recipients;
         }
     }
